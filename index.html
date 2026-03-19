@@ -1,1 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kat | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-blur blur-1"></div>
+  <div class="bg-blur blur-2"></div>
 
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="logo">KP</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#projects">Projects</a>
+        <a href="#guides">Guides</a>
+        <a href="#games">Games</a>
+        <a href="#services">Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="nav-btn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow">Kat’s Digital Headquarters</p>
+          <h1>
+            I build websites, guides, games, services, and digital products.
+          </h1>
+          <p class="hero-subtext">
+            This is my personal website where I showcase everything I’m building —
+            from startups like Picao AI and Pictology HQ to my coding guides,
+            future games, services, and more.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#guides" class="btn btn-secondary">Read Guides</a>
+            <a href="#contact" class="btn btn-ghost">Work With Me</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <h3>02</h3>
+              <p>Featured brands</p>
+            </div>
+            <div class="stat-card">
+              <h3>01</h3>
+              <p>Published guide</p>
+            </div>
+            <div class="stat-card">
+              <h3>∞</h3>
+              <p>More to come</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="feature-card">
+            <p class="card-label">Featured</p>
+            <h3>Picao AI</h3>
+            <p>
+              A creator-focused tool designed to help people make, organize,
+              and publish content more easily.
+            </p>
+            <span class="tag">Building</span>
+          </div>
+
+          <div class="feature-card">
+            <p class="card-label">Also Building</p>
+            <h3>Pictology HQ</h3>
+            <p>
+              A visuals and media concept for creators who need aesthetic
+              photos, b-roll, and digital creative assets.
+            </p>
+            <span class="tag">Concept</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Projects</p>
+          <h2>Things I’m building</h2>
+          <p>
+            My websites, products, and experiments — current and future.
+          </p>
+        </div>
+
+        <div class="card-grid three">
+          <article class="content-card">
+            <span class="tag">Startup</span>
+            <h3>Picao AI</h3>
+            <p>
+              A creator-focused platform built to make content creation and publishing easier.
+            </p>
+            <div class="card-footer">
+              <span>Status: In Progress</span>
+              <a href="#" class="text-link">View</a>
+            </div>
+          </article>
+
+          <article class="content-card">
+            <span class="tag">Visuals</span>
+            <h3>Pictology HQ</h3>
+            <p>
+              A creative media concept for photos, b-roll, and visual content assets.
+            </p>
+            <div class="card-footer">
+              <span>Status: In Progress</span>
+              <a href="#" class="text-link">View</a>
+            </div>
+          </article>
+
+          <article class="content-card">
+            <span class="tag">Tool</span>
+            <h3>Countly Text</h3>
+            <p>
+              A writing and text utility project with tools for word counting and more.
+            </p>
+            <div class="card-footer">
+              <span>Status: Live</span>
+              <a href="#" class="text-link">View</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guides">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Guides</p>
+          <h2>Things I teach and share</h2>
+          <p>
+            Educational content, beginner resources, and future guides I publish.
+          </p>
+        </div>
+
+        <div class="card-grid two">
+          <article class="content-card tall">
+            <span class="tag">Beginner Guide</span>
+            <h3>How to Code for Kids & Adults</h3>
+            <p>
+              A beginner-friendly guide meant to help new learners understand coding
+              in a simple and approachable way.
+            </p>
+            <div class="meta-row">
+              <span>Level: Beginner</span>
+              <span>Format: Guide</span>
+            </div>
+            <a href="#" class="btn btn-secondary small-btn">Read Guide</a>
+          </article>
+
+          <article class="content-card tall placeholder-card">
+            <span class="tag">Coming Soon</span>
+            <h3>More Guides on the Way</h3>
+            <p>
+              Future guides on coding, design, startups, personal branding,
+              and building online.
+            </p>
+            <a href="#" class="btn btn-ghost small-btn">Coming Soon</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="games">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Games</p>
+          <h2>Interactive things I’ll create</h2>
+          <p>
+            My games section will showcase browser games and creative experiments.
+          </p>
+        </div>
+
+        <div class="card-grid two">
+          <article class="content-card placeholder-card">
+            <span class="tag">Coming Soon</span>
+            <h3>Future Game #1</h3>
+            <p>A simple game project that will live here once it is built.</p>
+          </article>
+
+          <article class="content-card placeholder-card">
+            <span class="tag">Coming Soon</span>
+            <h3>Future Game #2</h3>
+            <p>More interactive ideas, playable projects, and fun experiments.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Services</p>
+          <h2>Ways to work with me</h2>
+          <p>
+            Personal services I offer now and more that I can add later.
+          </p>
+        </div>
+
+        <div class="card-grid three">
+          <article class="content-card">
+            <span class="tag">Service</span>
+            <h3>Landing Page Design</h3>
+            <p>
+              Clean, modern landing pages for founders, creators, and small brands.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <span class="tag">Service</span>
+            <h3>Website Setup</h3>
+            <p>
+              Help creating simple websites, portfolio pages, and beginner-friendly web setups.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <span class="tag">Service</span>
+            <h3>Creative Digital Help</h3>
+            <p>
+              Future support for branding, online presence, and digital ideas.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Shop</p>
+          <h2>Things I’ll sell</h2>
+          <p>
+            Templates, digital products, downloads, and maybe merch later on.
+          </p>
+        </div>
+
+        <div class="card-grid three">
+          <article class="content-card placeholder-card">
+            <span class="tag">Soon</span>
+            <h3>Templates</h3>
+            <p>Downloadable templates and useful digital resources.</p>
+          </article>
+
+          <article class="content-card placeholder-card">
+            <span class="tag">Soon</span>
+            <h3>Digital Products</h3>
+            <p>Mini products, kits, and useful files for creators and learners.</p>
+          </article>
+
+          <article class="content-card placeholder-card">
+            <span class="tag">Future</span>
+            <h3>Merch</h3>
+            <p>If the brand grows enough, this section can expand into merch.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section socials-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Socials</p>
+          <h2>Find me online</h2>
+          <p>
+            My social media, platforms, and places where I share what I’m building.
+          </p>
+        </div>
+
+        <div class="socials-grid">
+          <a href="#" class="social-card">YouTube</a>
+          <a href="#" class="social-card">TikTok</a>
+          <a href="#" class="social-card">Instagram</a>
+          <a href="#" class="social-card">Snapchat</a>
+          <a href="#" class="social-card">Discord</a>
+          <a href="#" class="social-card">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow">About Me</p>
+          <h2>Builder, creator, and future founder.</h2>
+        </div>
+
+        <div class="about-card">
+          <p>
+            I’m Kat, and this website is where I document everything I’m building —
+            from startups and tools to guides, services, games, and digital products.
+          </p>
+          <p>
+            My goal is to create things that help people learn, create, and build online.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-wrap">
+        <div class="section-heading left-align">
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s work together</h2>
+          <p>
+            For collaborations, services, projects, or general inquiries.
+          </p>
+        </div>
+
+        <form class="contact-form">
+          <div class="input-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" />
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" />
+          </div>
+
+          <div class="input-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="6" placeholder="Tell me about your project"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© 2026 Kat. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#home">Top</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

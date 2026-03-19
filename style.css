@@ -553,3 +553,142 @@ textarea {
     max-width: none;
   }
 }
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Active nav link */
+.nav-links a.active-link {
+  color: var(--text);
+  position: relative;
+}
+
+.nav-links a.active-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Custom cursor */
+body {
+  cursor: none;
+}
+
+.custom-cursor,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(166, 106, 63, 0.45);
+  background: rgba(255, 248, 240, 0.18);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease,
+    border-color 0.25s ease, transform 0.08s linear;
+}
+
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: rgba(166, 106, 63, 0.85);
+  border-radius: 50%;
+}
+
+.cursor-hover {
+  width: 54px;
+  height: 54px;
+  background: rgba(234, 215, 195, 0.28);
+  border-color: rgba(166, 106, 63, 0.7);
+}
+
+/* Expandable project details */
+.work-item {
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-toggle {
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 243, 0.72);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.details-toggle:hover {
+  background: rgba(255, 250, 243, 0.98);
+  transform: translateY(-1px);
+}
+
+.project-details {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: max-height 0.45s ease, opacity 0.35s ease, transform 0.35s ease,
+    padding-top 0.35s ease;
+  color: var(--muted);
+}
+
+.work-item.open .project-details {
+  max-height: 220px;
+  opacity: 1;
+  transform: translateY(0);
+  padding-top: 14px;
+}
+
+/* Slight hover upgrade */
+.soft-card,
+.intro-card,
+.link-tile,
+.work-item {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.soft-card:hover,
+.intro-card:hover,
+.link-tile:hover,
+.work-item:hover {
+  box-shadow: 0 24px 54px rgba(76, 53, 34, 0.1);
+}
+
+/* Disable custom cursor on mobile */
+@media (max-width: 860px), (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+
+  .custom-cursor,
+  .cursor-dot {
+    display: none !important;
+  }
+}

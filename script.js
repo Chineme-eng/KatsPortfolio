@@ -11,34 +11,28 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
   });
 });
 
-/* =========================
-   REVEAL ON SCROLL
-========================= */
-const revealItems = document.querySelectorAll(
-  ".section, .intro-card, .soft-card, .work-item, .link-tile, .hero-photo-card, .mini-note"
+/* reveal on scroll */
+const revealTargets = document.querySelectorAll(
+  ".fade-up, .soft-card, .intro-card, .work-item, .hero-photo-card, .about-text, .mini-links a"
 );
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("revealed");
+        entry.target.classList.add("in-view");
       }
     });
   },
-  {
-    threshold: 0.12,
-  }
+  { threshold: 0.14 }
 );
 
-revealItems.forEach((item) => {
-  item.classList.add("reveal");
-  revealObserver.observe(item);
+revealTargets.forEach((el) => {
+  el.classList.add("fade-up");
+  revealObserver.observe(el);
 });
 
-/* =========================
-   ACTIVE NAV LINK ON SCROLL
-========================= */
+/* active nav */
 const sections = document.querySelectorAll("main section[id]");
 const navAnchors = document.querySelectorAll(".nav-links a");
 
@@ -65,17 +59,10 @@ function setActiveLink() {
 window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
-/* =========================
-   CUSTOM CURSOR
-========================= */
-const cursor = document.createElement("div");
-cursor.className = "custom-cursor";
-
-const cursorDot = document.createElement("div");
-cursorDot.className = "cursor-dot";
-
-document.body.appendChild(cursor);
-document.body.appendChild(cursorDot);
+/* X cursor */
+const xCursor = document.createElement("div");
+xCursor.className = "x-cursor";
+document.body.appendChild(xCursor);
 
 let mouseX = 0;
 let mouseY = 0;
@@ -85,99 +72,67 @@ let cursorY = 0;
 window.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
-
-  cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
 });
 
 function animateCursor() {
-  cursorX += (mouseX - cursorX) * 0.14;
-  cursorY += (mouseY - cursorY) * 0.14;
-
-  cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+  cursorX += (mouseX - cursorX) * 0.18;
+  cursorY += (mouseY - cursorY) * 0.18;
+  xCursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
 
 const hoverTargets = document.querySelectorAll(
-  "a, button, .soft-card, .intro-card, .link-tile, .work-item"
+  "a, button, .soft-card, .intro-card, .work-item, .mini-links a"
 );
 
 hoverTargets.forEach((item) => {
   item.addEventListener("mouseenter", () => {
-    cursor.classList.add("cursor-hover");
+    xCursor.classList.add("hovered");
   });
 
   item.addEventListener("mouseleave", () => {
-    cursor.classList.remove("cursor-hover");
+    xCursor.classList.remove("hovered");
   });
 });
 
-/* Hide custom cursor on touch devices */
-function isTouchDevice() {
-  return window.matchMedia("(pointer: coarse)").matches;
+/* disable cursor on touch devices */
+if (window.matchMedia("(pointer: coarse)").matches) {
+  xCursor.style.display = "none";
 }
 
-if (isTouchDevice()) {
-  cursor.style.display = "none";
-  cursorDot.style.display = "none";
-}
+/* expandable projects */
+document.querySelectorAll(".work-item").forEach((item) => {
+  const detail = item.querySelector(".project-detail");
+  const btn = item.querySelector(".project-toggle");
 
-/* =========================
-   EXPANDABLE PROJECT DETAILS
-========================= */
-const workItems = document.querySelectorAll(".work-item");
+  if (!detail || !btn) return;
 
-workItems.forEach((item) => {
-  const content = item.querySelector("div");
-
-  const details = document.createElement("div");
-  details.className = "project-details";
-  details.innerHTML = `
-    <p>
-      More details about this project can go here: what it is, why you made it,
-      what tools you used, what stage it is in, and where it is headed.
-    </p>
-  `;
-
-  const toggleBtn = document.createElement("button");
-  toggleBtn.className = "details-toggle";
-  toggleBtn.type = "button";
-  toggleBtn.textContent = "More";
-
-  const actions = document.createElement("div");
-  actions.className = "project-actions";
-  actions.appendChild(toggleBtn);
-
-  item.appendChild(actions);
-  item.appendChild(details);
-
-  toggleBtn.addEventListener("click", () => {
+  btn.addEventListener("click", () => {
     const isOpen = item.classList.contains("open");
 
     document.querySelectorAll(".work-item.open").forEach((openItem) => {
       openItem.classList.remove("open");
-      const btn = openItem.querySelector(".details-toggle");
-      if (btn) btn.textContent = "More";
+      const openBtn = openItem.querySelector(".project-toggle");
+      if (openBtn) openBtn.textContent = "Details";
     });
 
     if (!isOpen) {
       item.classList.add("open");
-      toggleBtn.textContent = "Less";
+      btn.textContent = "Close";
     }
   });
 });
 
-/* =========================
-   PARALLAX FOR BACKGROUND ORBS
-========================= */
-const orbs = document.querySelectorAll(".bg-orb");
+/* soft parallax */
+const floatingShapes = document.querySelectorAll(".float-shape");
 
 window.addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 14;
-  const y = (e.clientY / window.innerHeight - 0.5) * 14;
+  const x = (e.clientX / window.innerWidth - 0.5) * 10;
+  const y = (e.clientY / window.innerHeight - 0.5) * 10;
 
-  orbs.forEach((orb, index) => {
-    const speed = (index + 1) * 0.4;
-    orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+  floatingShapes.forEach((shape, i) => {
+    const speed = (i + 1) * 0.35;
+    shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
   });
 });

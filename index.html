@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+  <div class="bg-grid"></div>
+  <div class="grain"></div>
+
   <header class="site-header">
     <div class="container nav">
       <a href="#top" class="brand">KP</a>
@@ -33,21 +39,48 @@
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-inner">
-        <p class="kicker">A personal website by Kat</p>
-        <h1>
-          A place for the things I build,
-          write, design, and share.
-        </h1>
-        <p class="lead">
-          This is my corner of the internet — a home for my projects,
-          guides, experiments, future games, digital products, and the ideas
-          I’m growing over time.
-        </p>
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <p class="kicker">A personal website by Kat</p>
 
-        <div class="hero-actions">
-          <a href="#work" class="text-btn">Explore my work</a>
-          <a href="#about" class="text-btn muted-link">Read about me</a>
+          <h1>
+            A place for the things I build,
+            write, design, and share.
+          </h1>
+
+          <p class="lead">
+            This is my corner of the internet — a home for my projects, guides,
+            experiments, future games, digital products, and the ideas I’m growing over time.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="text-btn">Explore my work</a>
+            <a href="#about" class="text-btn muted-link">Read about me</a>
+          </div>
+
+          <div class="mini-note">
+            Projects, writing, experiments, and everything else — all in one place.
+          </div>
+        </div>
+
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-card">
+            <div class="hero-photo-frame">
+              <!-- Replace this box with your real image -->
+              <div class="photo-placeholder">
+                <span>Add your photo</span>
+              </div>
+
+              <!-- Example when you have your image:
+              <img src="images/kat-photo.jpg" alt="Portrait of Kat" class="hero-photo" />
+              -->
+            </div>
+
+            <div class="photo-caption">
+              <p class="caption-label">Portrait</p>
+              <p class="caption-text">A visual space for me, my work, and my world.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -208,7 +241,7 @@
           <h2>A little about me</h2>
         </div>
 
-        <div class="about-text">
+        <div class="about-text soft-panel">
           <p>
             I’m Kat. I like building things on the internet — websites, guides,
             ideas, visual concepts, and anything that helps me create a world of my own.

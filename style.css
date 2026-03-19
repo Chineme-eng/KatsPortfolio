@@ -991,3 +991,16 @@ body::after {
     align-items: flex-start;
   }
 }
+.mini-links svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  color: #5e4b3c;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mini-links a:hover svg {
+  opacity: 1;
+  transform: scale(1.1);
+}

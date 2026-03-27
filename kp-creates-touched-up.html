@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KP Creates — Builder · Designer · Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf7f2;
+    --cream-deep: #f2ede6;
+    --black: #000000;
+    --orange: #b85c2a;
+    --orange-pale: #f0d5c8;
+    --green: #2d6a4f;
+    --serif: 'Playfair Display', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --line: rgba(0,0,0,0.09);
+    --line-light: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  .page-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--orange);
+    z-index: 200;
+    transition: width 0.08s linear;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(250,247,242,0.93);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--orange); }
+
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    position: relative;
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    opacity: 0.52;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    width: 100%;
+    height: 1px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.22s ease;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+  }
+
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-sub {
+    background: var(--black);
+    color: var(--cream) !important;
+    opacity: 1 !important;
+    padding: 0.45rem 1rem !important;
+    border-radius: 2px;
+    transition: background 0.2s !important, transform 0.16s !important;
+  }
+
+  .nav-sub::after { display: none; }
+  .nav-sub:hover { background: var(--orange) !important; transform: translateY(-1px); }
+
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    bottom: -3rem;
+    right: -1rem;
+    font-family: var(--serif);
+    font-size: clamp(9rem,20vw,24rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,0,0,0.055);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem,5.5vw,6rem);
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.78;
+    opacity: 0.60;
+    max-width: 42ch;
+    margin: 1.45rem 0 2.3rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary,
+  .btn-ghost,
+  .btn-secondary {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary, .btn-secondary {
+    border: none;
+    padding: 0.85rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s, border-color 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--cream);
+  }
+
+  .btn-primary:hover {
+    background: var(--black);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid rgba(0,0,0,0.14);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    color: var(--black);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-ghost:hover { opacity: 1; }
+
+  .hero-socials {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    margin-top: 1.8rem;
+  }
+
+  .social-pill {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.7rem;
+    border: 1px solid rgba(0,0,0,0.16);
+    text-decoration: none;
+    color: var(--black);
+    opacity: 0.45;
+    border-radius: 20px;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s, transform 0.16s;
+  }
+
+  .social-pill:hover {
+    opacity: 1;
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-1px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.09);
+  }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.61rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.42;
+    margin-top: 0.15rem;
+  }
+
+  .hero-right {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-panel {
+    position: relative;
+    width: min(520px, 100%);
+    height: 470px;
+  }
+
+  .float-card {
+    position: absolute;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  .float-card.main {
+    inset: 48px 30px 36px 40px;
+  }
+
+  .float-card.small-a {
+    width: 200px;
+    right: 0;
+    top: 0;
+  }
+
+  .float-card.small-b {
+    width: 180px;
+    left: 0;
+    bottom: 0;
+  }
+
+  .float-thumb {
+    height: 100%;
+    background: linear-gradient(135deg, #e7d6c9, #f4ebe2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .float-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    opacity: 0.94;
+    transition: transform 0.5s ease;
+  }
+
+  .float-card:hover .float-thumb img { transform: scale(1.03); }
+
+  .float-label {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.9rem;
+    background: rgba(0,0,0,0.75);
+    color: var(--cream);
+    padding: 0.45rem 0.65rem;
+    font-family: var(--mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  section { padding: 6rem 3rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem,3.5vw,3rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    min-width: 2rem;
+  }
+
+  .about {
+    background: var(--black);
+    color: var(--cream);
+  }
+
+  .about .section-title { color: var(--cream); }
+  .about .section-num { color: var(--orange); }
+  .about .section-line { background: rgba(255,255,255,0.1); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.85;
+    opacity: 0.72;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p strong {
+    color: var(--orange);
+    font-weight: 500;
+  }
+
+  .about-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+
+  .skill-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.52;
+    margin-bottom: 0.4rem;
+  }
+
+  .skill-track {
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 1px;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .pcard {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s, transform 0.18s;
+  }
+
+  .pcard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.32) 35%, transparent 60%);
+    transform: translateX(-130%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .pcard:hover::before { transform: translateX(130%); }
+  .pcard:hover { background: #f5f0e8; }
+  .pcard:hover .pcard-arrow { opacity: 1; transform: translate(0,0); }
+  .pcard:hover .pcard-img { transform: scale(1.04); }
+
+  .pcard-thumb {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #e5dfd6;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    position: relative;
+  }
+
+  .pcard-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.45s ease, filter 0.25s ease;
+  }
+
+  .pcard-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--orange);
+    opacity: 0.3;
+    letter-spacing: -0.05em;
+  }
+
+  .pcard-body {
+    padding: 1.4rem 1.5rem 1.7rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pcard-tag {
+    font-family: var(--mono);
+    font-size: 0.59rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+  }
+
+  .pcard-title {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 0.45rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pcard-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    opacity: 0.5;
+    flex: 1;
+  }
+
+  .pcard-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    gap: 0.75rem;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.52rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .b-free { background: rgba(45,106,79,0.1); color: #2d6a4f; }
+  .b-paid { background: rgba(184,92,42,0.12); color: var(--orange); }
+  .b-live { background: rgba(184,92,42,0.12); color: var(--orange); }
+  .b-beta { background: rgba(65,105,225,0.1); color: #4169e1; }
+  .b-notion { background: rgba(0,0,0,0.07); color: #555; }
+  .b-preview { background: rgba(0,0,0,0.07); color: #555; }
+
+  .pcard-arrow {
+    font-size: 0.9rem;
+    color: var(--orange);
+    opacity: 0;
+    transform: translate(-4px,4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .starts-group-label,
+  .sub-label {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 1rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .sub-group { margin-bottom: 3rem; }
+  .sub-group:last-child { margin-bottom: 0; }
+
+  .is-paid {
+    cursor: pointer;
+  }
+
+  .is-paid .pcard-img {
+    filter: blur(1.8px) saturate(0.88);
+  }
+
+  .is-paid .pcard-thumb::after {
+    content: 'Locked preview';
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 0.7rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0.0));
+    color: var(--cream);
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .paid-overlay-note {
+    font-family: var(--mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.46;
+  }
+
+  .startups {
+    background: #0c0c0c;
+    color: var(--cream);
+  }
+
+  .startups .section-title { color: var(--cream); }
+  .startups .section-num { color: var(--orange); }
+  .startups .section-line { background: rgba(255,255,255,0.1); }
+  .startups .card-grid { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.05); }
+  .startups .pcard { background: #141414; color: var(--cream); }
+  .startups .pcard:hover { background: #1c1c1c; }
+  .startups .pcard-thumb { background: #1e1e1e; border-bottom-color: rgba(255,255,255,0.06); }
+  .startups .pcard-foot { border-top-color: rgba(255,255,255,0.08); }
+
+  .coming-soon {
+    border: 1.5px dashed rgba(0,0,0,0.14);
+    padding: 4.5rem 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .coming-soon .cs-icon { font-size: 3.5rem; opacity: 0.35; }
+  .coming-soon h3 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    opacity: 0.45;
+  }
+
+  .coming-soon p {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.3;
+  }
+
+  .sub-section {
+    background: var(--orange);
+    color: var(--cream);
+    padding: 6rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sub-section::before {
+    content: '✉';
+    position: absolute;
+    font-size: 26rem;
+    opacity: 0.04;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+
+  .sub-section h2 {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem,5vw,4.2rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.7rem;
+    position: relative;
+  }
+
+  .sub-section p {
+    font-size: 1rem;
+    opacity: 0.75;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .sub-form {
+    display: flex;
+    max-width: 460px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .sub-form input {
+    flex: 1;
+    padding: 1rem 1.3rem;
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 2px 0 0 2px;
+  }
+
+  .sub-form input::placeholder { opacity: 0.65; color: var(--cream); }
+
+  .sub-form button {
+    background: var(--black);
+    color: var(--cream);
+    border: none;
+    padding: 1rem 1.8rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    transition: background 0.2s;
+  }
+
+  .sub-form button:hover { background: #1a1a1a; }
+
+  footer {
+    background: var(--black);
+    color: var(--cream);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .f-logo {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
+  .f-logo span { color: var(--orange); }
+
+  footer small {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    opacity: 0.28;
+    text-transform: uppercase;
+  }
+
+  .f-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .f-links a {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.32;
+    transition: opacity 0.2s;
+  }
+
+  .f-links a:hover { opacity: 1; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    z-index: 300;
+  }
+
+  .modal.open { display: flex; }
+
+  .modal-card {
+    width: min(560px, 100%);
+    background: var(--cream);
+    color: var(--black);
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.55;
+  }
+
+  .modal-close:hover { opacity: 1; }
+
+  .modal-kicker {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--orange);
+    margin-bottom: 0.8rem;
+  }
+
+  .modal h3 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    margin-bottom: 0.8rem;
+  }
+
+  .modal p {
+    line-height: 1.7;
+    opacity: 0.65;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-note {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    opacity: 0.42;
+    margin-top: 1rem;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 1.15rem;
+  }
+
+  @media (max-width: 860px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+    .sub-form { flex-direction: column; }
+    .sub-form input { border-radius: 2px 2px 0 0; }
+    .sub-form button { border-radius: 0 0 2px 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-progress" id="pageProgress"></div>
+
+<nav>
+  <a href="#" class="nav-logo">KP<span>.</span>Creates</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#startups">Startups</a></li>
+    <li><a href="#templates">Templates</a></li>
+    <li><a href="#guides">Guides</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#subscribe" class="nav-sub">Subscribe</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Builder · Designer · Creator</div>
+    <h1>Hi, I’m <em>Kat</em>.<br>I make digital products<br>that feel like me.</h1>
+    <p class="hero-desc">I design and build tools, templates, guides, and startups around the things I actually care about — clarity, usefulness, beautiful presentation, and ideas worth shipping.</p>
+    <div class="hero-cta">
+      <a href="https://kpcreates.gumroad.com" target="_blank" class="btn-primary">Shop on Gumroad</a>
+      <a href="#about" class="btn-ghost">Learn more</a>
+      <a href="#tools" class="btn-secondary">Browse projects</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://kpcreates.gumroad.com" target="_blank" class="social-pill">Gumroad</a>
+      <a href="https://linkedin.com/in/katoduah" target="_blank" class="social-pill">LinkedIn</a>
+      <a href="https://github.com/chineme-eng" target="_blank" class="social-pill">GitHub</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">10+</div><div class="stat-label">Products</div></div>
+      <div><div class="stat-num">4</div><div class="stat-label">Startups</div></div>
+      <div><div class="stat-num">5+</div><div class="stat-label">Pro Tools</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-panel">
+      <div class="float-card main reveal">
+        <div class="float-thumb">
+          <img src="https://api.microlink.io/?url=https%3A%2F%2Fpicaoai.com%2F&screenshot=true&meta=false&embed=screenshot.url" alt="Picao AI preview" loading="lazy">
+          <div class="float-label">Picao AI</div>
+        </div>
+      </div>
+      <div class="float-card small-a reveal">
+        <div class="float-thumb">
+          <img src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FCountly-Text%2F&screenshot=true&meta=false&embed=screenshot.url" alt="Countly Text preview" loading="lazy">
+          <div class="float-label">Countly Text</div>
+        </div>
+      </div>
+      <div class="float-card small-b reveal">
+        <div class="float-thumb">
+          <img src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FSaaS-Income-Calculator%2F&screenshot=true&meta=false&embed=screenshot.url" alt="SaaS Growth Simulator preview" loading="lazy">
+          <div class="float-label">SaaS Growth</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bg" aria-hidden="true">KP</div>
+</section>
+
+<section class="about reveal" id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hey — I'm <strong>KP</strong>. I build digital things: web tools that save time, templates that look great out of the box, guides that actually teach, and startups that scratch real itches.</p>
+      <p>My work lives at the intersection of <strong>design and utility</strong>. I’m not interested in bloated software or filler — just sharp, focused products that do exactly what they say.</p>
+      <p>Everything here started with a problem I personally had. From <strong>Picao AI</strong> to calculators, tax tools, and coding guides, it all comes from the same instinct: make useful things and make them feel good to use.</p>
+      <p>Find my products on Gumroad, connect on LinkedIn, and explore the code on GitHub.</p>
+    </div>
+    <div class="about-skills">
+      <div class="skill-row"><div class="skill-label"><span>Web Development</span><span>95%</span></div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+      <div class="skill-row"><div class="skill-label"><span>UI / UX Design</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+      <div class="skill-row"><div class="skill-label"><span>Product Design</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill-row"><div class="skill-label"><span>Templates & No-Code</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+      <div class="skill-row"><div class="skill-label"><span>Startup Building</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="tools" class="reveal">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Web Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="sub-group">
+    <div class="sub-label">Free Tools</div>
+    <div class="card-grid">
+      <a href="https://chineme-eng.github.io/Countly-Text/" target="_blank" class="pcard">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FCountly-Text%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">CT</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Writing · Productivity</div><div class="pcard-title">Countly Text</div><div class="pcard-desc">Clean writing stats — word count, reading grade, sentence insights, and repeated word detection. All in one live workspace.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+      </a>
+      <a href="https://chineme-eng.github.io/US-Tax-Guide/" target="_blank" class="pcard">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FUS-Tax-Guide%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">TM</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Finance · Tax</div><div class="pcard-title">US State Tax Guide 2025</div><div class="pcard-desc">Know what you actually keep. Income brackets, take-home examples, sales tax, and property tax across all 50 states.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+      </a>
+      <a href="https://chineme-eng.github.io/Freelance-Calculator/" target="_blank" class="pcard">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FFreelance-Calculator%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">FC</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Freelance · Pricing</div><div class="pcard-title">Freelance Pricing Calculator</div><div class="pcard-desc">Stop guessing what to charge. Pick your service, client type, and income goal — get clean hourly, project, and package rates.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+      </a>
+      <a href="https://chineme-eng.github.io/SaaS-Income-Calculator/" target="_blank" class="pcard">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FSaaS-Income-Calculator%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">SG</div></div>
+        <div class="pcard-body"><div class="pcard-tag">SaaS · Finance</div><div class="pcard-title">SaaS Growth Simulator</div><div class="pcard-desc">Model users, churn, pricing, costs, and growth to see whether your SaaS can actually scale.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+      </a>
+      <a href="https://chineme-eng.github.io/E-commerce-Calculator/" target="_blank" class="pcard">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FE-commerce-Calculator%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">EP</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Ecommerce · Profit</div><div class="pcard-title">Ecom Profit Analyzer</div><div class="pcard-desc">Real profit after ads, fees, shipping, and returns — built for Shopify brands, dropshippers, and TikTok Shop sellers.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="sub-group">
+    <div class="sub-label">Pro / Paid Tools</div>
+    <div class="card-grid">
+      <button type="button" class="pcard is-paid" data-title="Countly Text — Pro" data-gumroad="https://kpcreates.gumroad.com" data-desc="This is a paid tool, so the direct build isn’t exposed from the portfolio anymore. Use this card as a locked preview and send people to Gumroad or your checkout page instead.">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FCountly-Text-Pro%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">CT+</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Writing · Pro</div><div class="pcard-title">Countly Text — Pro</div><div class="pcard-desc">The full writing analysis engine with advanced readability scoring, export tools, and deeper sentence-level insights.</div><div class="pcard-foot"><span class="badge b-paid">Pro</span><span class="paid-overlay-note">Click for access</span></div></div>
+      </button>
+
+      <button type="button" class="pcard is-paid" data-title="Ultimate Tax Map — Pro" data-gumroad="https://kpcreates.gumroad.com" data-desc="The portfolio now treats this as a locked product card instead of a direct public link. That is better for conversion, but true protection still requires moving paid files off public GitHub Pages.">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FUS-Tax-Guide-Pro%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">TM+</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Finance · Pro</div><div class="pcard-title">Ultimate Tax Map — Pro</div><div class="pcard-desc">Interactive maps, side-by-side state comparisons, and deeper bracket analysis across all 50 states.</div><div class="pcard-foot"><span class="badge b-paid">Pro</span><span class="paid-overlay-note">Click for access</span></div></div>
+      </button>
+
+      <button type="button" class="pcard is-paid" data-title="Freelance Pricing Calculator Pro" data-gumroad="https://kpcreates.gumroad.com" data-desc="Use this card to preview the pro tool and send buyers to your checkout page. Don’t link the portfolio straight to the hosted pro page if you want cleaner gating.">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FFreelance-Calc-Pro%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">FC+</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Freelance · Pro</div><div class="pcard-title">Freelance Pricing Calculator Pro</div><div class="pcard-desc">Full quote engine with retainer, rush fee, scope modifier, client tier pricing, and exportable proposals.</div><div class="pcard-foot"><span class="badge b-paid">Pro</span><span class="paid-overlay-note">Click for access</span></div></div>
+      </button>
+
+      <button type="button" class="pcard is-paid" data-title="SaaS Growth Engine — Pro" data-gumroad="https://kpcreates.gumroad.com" data-desc="This pro card is now preview-only from the portfolio. For real protection, host the paid build somewhere private or deliver it after purchase instead of keeping it openly public.">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FSaas-Calculator-Pro%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">SG+</div></div>
+        <div class="pcard-body"><div class="pcard-tag">SaaS · Pro</div><div class="pcard-title">SaaS Growth Engine — Pro</div><div class="pcard-desc">Advanced cohort modeling, scenario planning, runway analysis, and investor-ready growth projections.</div><div class="pcard-foot"><span class="badge b-paid">Pro</span><span class="paid-overlay-note">Click for access</span></div></div>
+      </button>
+
+      <button type="button" class="pcard is-paid" data-title="Ecom Profit Engine — Pro" data-gumroad="https://kpcreates.gumroad.com" data-desc="The card remains visible for credibility, but access is routed through your store instead of exposing the direct paid URL from the portfolio page.">
+        <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FEcom-Calc-Pro%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">EP+</div></div>
+        <div class="pcard-body"><div class="pcard-tag">Ecommerce · Pro</div><div class="pcard-title">Ecom Profit Engine — Pro</div><div class="pcard-desc">Multi-SKU profit stacking, ad spend breakdowns, platform fee comparisons, and margin leak diagnostics.</div><div class="pcard-foot"><span class="badge b-paid">Pro</span><span class="paid-overlay-note">Click for access</span></div></div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="startups reveal" id="startups">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">My Startups</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card-grid">
+    <a href="https://picaoai.com/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fpicaoai.com%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">PA</div></div>
+      <div class="pcard-body"><div class="pcard-tag">AI · Creator Tools</div><div class="pcard-title">Picao AI</div><div class="pcard-desc">The workspace that thinks with you. Capture an idea once and Picao turns it into posts, scripts, visuals, and scheduled content.</div><div class="pcard-foot"><span class="badge b-live">Live</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+    <a href="https://pictologyhq.com/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fpictologyhq.com%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">PH</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Photography · Media</div><div class="pcard-title">Pictology HQ</div><div class="pcard-desc">The craft of photography. A sanctuary for the study of light, form, and archival permanence.</div><div class="pcard-foot"><span class="badge b-live">Live</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+    <a href="https://chineme-eng.github.io/One84/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FOne84%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">O84</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Community · Growth</div><div class="pcard-title">One84 — Mind The Gap</div><div class="pcard-desc">A space for high-achievers navigating the years between 18 and 25 — the years nobody really prepared you for.</div><div class="pcard-foot"><span class="badge b-beta">Beta</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+    <a href="https://chineme-eng.github.io/KatPages/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FKatPages%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">KP</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Design · Landing Pages</div><div class="pcard-title">Kathrine Oduah — Landing Pages</div><div class="pcard-desc">Landing pages that actually work — clean, visual, and conversion-focused for founders and creators.</div><div class="pcard-foot"><span class="badge b-live">Live</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="templates" class="reveal" style="background:#f2ede6;">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Templates</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card-grid" style="background:rgba(0,0,0,0.07);border-color:rgba(0,0,0,0.07);max-width:640px;">
+    <a href="https://www.notion.so/328f0fa10aa8813d8fbccb29dfdcacbf?pvs=21" target="_blank" class="pcard" style="background:#f2ede6;">
+      <div class="pcard-thumb" style="background:linear-gradient(135deg,#e8d5c4,#d4bba0);"><div class="pcard-fallback" style="display:flex;font-size:3.5rem;opacity:0.5;">📋</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Notion · Life OS</div><div class="pcard-title">Ultimate Life Planner</div><div class="pcard-desc">A comprehensive Notion system for goals, habits, projects, finances, and everyday planning in one dashboard.</div><div class="pcard-foot"><span class="badge b-notion">Notion Template</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="guides" class="reveal">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Guides</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card-grid">
+    <a href="https://chineme-eng.github.io/KatCodes-For-Kids/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FKatCodes-For-Kids%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">🚀</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Education · Kids</div><div class="pcard-title">A Kid's Guide to Code</div><div class="pcard-desc">A beginner-friendly coding guide designed to feel approachable, interactive, and actually fun for younger learners.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+    <a href="https://chineme-eng.github.io/KatCodes-for-Everyone/" target="_blank" class="pcard">
+      <div class="pcard-thumb"><img class="pcard-img" src="https://api.microlink.io/?url=https%3A%2F%2Fchineme-eng.github.io%2FKatCodes-for-Everyone%2F&screenshot=true&meta=false&embed=screenshot.url" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="pcard-fallback" style="display:none">📘</div></div>
+      <div class="pcard-body"><div class="pcard-tag">Education · Beginner</div><div class="pcard-title">A Beginner's Guide to Code</div><div class="pcard-desc">A no-jargon introduction to coding fundamentals with simple explanations and browser-based examples.</div><div class="pcard-foot"><span class="badge b-free">Free</span><span class="pcard-arrow">→</span></div></div>
+    </a>
+  </div>
+</section>
+
+<section id="games" class="reveal" style="background:#f2ede6;">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Web Games</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="coming-soon">
+    <span class="cs-icon">🎮</span>
+    <h3>Games are coming.</h3>
+    <p>Nothing to play yet — but something is in the works.</p>
+  </div>
+</section>
+
+<section class="sub-section reveal" id="subscribe">
+  <h2>Stay in the Loop</h2>
+  <p>New tools, templates, and launches — straight to your inbox. No fluff, no spam.</p>
+  <form class="sub-form" onsubmit="handleSub(event)">
+    <input type="email" id="sub-email" placeholder="your@email.com" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<footer>
+  <div class="f-logo">KP<span>.</span>Creates</div>
+  <small>© 2025 KP Creates · Built with intention</small>
+  <div class="f-links">
+    <a href="https://kpcreates.gumroad.com" target="_blank">Gumroad</a>
+    <a href="https://linkedin.com/in/katoduah" target="_blank">LinkedIn</a>
+    <a href="https://github.com/chineme-eng" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<div class="modal" id="paidModal" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close" id="closeModal" aria-label="Close">✕</button>
+    <div class="modal-kicker">Paid product</div>
+    <h3 id="modalTitle">Locked tool</h3>
+    <p id="modalDesc">This product is preview-only from the portfolio.</p>
+    <p>I changed the paid cards so they no longer expose the direct hosted tool URLs from your portfolio. That improves the experience, but it is not true security if the pro pages are still publicly hosted.</p>
+    <div class="modal-actions">
+      <a id="modalBuy" class="btn-primary" href="https://kpcreates.gumroad.com" target="_blank">View on Gumroad</a>
+      <a class="btn-secondary" href="#tools">Back to tools</a>
+    </div>
+    <div class="modal-note">For real protection, move paid builds off public GitHub Pages and deliver access after purchase.</div>
+  </div>
+</div>
+
+<script>
+  function handleSub(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = "✓ You're in!";
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => {
+      btn.textContent = 'Subscribe';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  const progress = document.getElementById('pageProgress');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.style.width = percent + '%';
+  }
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        if (entry.target.classList.contains('about')) {
+          entry.target.querySelectorAll('.skill-fill').forEach((bar, i) => {
+            setTimeout(() => { bar.style.transform = 'scaleX(1)'; }, i * 120);
+          });
+        }
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => io.observe(el));
+
+  const modal = document.getElementById('paidModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalBuy = document.getElementById('modalBuy');
+  const closeModal = document.getElementById('closeModal');
+
+  document.querySelectorAll('.is-paid').forEach(card => {
+    card.addEventListener('click', () => {
+      modalTitle.textContent = card.dataset.title || 'Locked tool';
+      modalDesc.textContent = card.dataset.desc || 'This paid tool is preview-only from the portfolio.';
+      modalBuy.href = card.dataset.gumroad || 'https://kpcreates.gumroad.com';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function shutModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  closeModal.addEventListener('click', shutModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) shutModal();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') shutModal();
+  });
+</script>
+</body>
+</html>

@@ -55,18 +55,34 @@
   }
 
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.1rem 3rem;
-    background: rgba(250,247,242,0.93);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0,0,0,0.07);
-  }
-
+  position: fixed;
+  /* Centers the pill and moves it down from the top */
+  top: 1.2rem; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  /* Sizing: prevents it from touching screen edges on mobile */
+  width: min(1000px, calc(100% - 2rem));
+  padding: 0.6rem 1.6rem 0.6rem 2rem;
+  
+  /* The Pill Shape */
+  border-radius: 50px; 
+  
+  /* Glassmorphism Effect */
+  background: rgba(250, 247, 242, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Border and Floating Shadow */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
   .nav-logo {
     font-family: var(--serif);
     font-size: 1.15rem;
@@ -78,11 +94,12 @@
 
   .nav-logo span { color: var(--orange); }
 
-  .nav-links {
-    display: flex;
-    gap: 1.8rem;
-    list-style: none;
-  }
+ .nav-links {
+  display: flex;
+  gap: 1.2rem; /* Reduced from 1.8rem to fit the pill shape */
+  list-style: none;
+  align-items: center;
+}
 
   .nav-links a {
     position: relative;
@@ -117,14 +134,15 @@
     transform: scaleX(1);
   }
 
-  .nav-sub {
-    background: var(--black);
-    color: var(--cream) !important;
-    opacity: 1 !important;
-    padding: 0.45rem 1rem !important;
-    border-radius: 2px;
-    transition: background 0.2s !important, transform 0.16s !important;
-  }
+ .nav-sub {
+  background: var(--black);
+  color: var(--cream) !important;
+  opacity: 1 !important;
+  padding: 0.5rem 1.2rem !important;
+  border-radius: 30px; /* Changed from 2px to 30px for the capsule look */
+  font-weight: 700;
+  transition: all 0.2s ease !important;
+}
 
   .nav-sub::after { display: none; }
   .nav-sub:hover { background: var(--orange) !important; transform: translateY(-1px); }

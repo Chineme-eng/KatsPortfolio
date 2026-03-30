@@ -54,35 +54,43 @@
     transition: width 0.08s linear;
   }
 
-  nav {
-  position: fixed;
-  /* Centers the pill and moves it down from the top */
-  top: 1.2rem; 
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
-  /* Sizing: prevents it from touching screen edges on mobile */
-  width: min(1000px, calc(100% - 2rem));
-  padding: 0.6rem 1.6rem 0.6rem 2rem;
-  
-  /* The Pill Shape */
-  border-radius: 50px; 
-  
-  /* Glassmorphism Effect */
-  background: rgba(250, 247, 242, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  
-  /* Border and Floating Shadow */
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
-}
+ nav {
+    /* 1. Default State: Full width bar at the very top */
+    position: fixed;
+    top: 0; 
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 1.1rem 3rem;
+    background: rgba(250,247,242,0.93);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* Smoothly animate the change between bar and pill */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 2. Scrolled State: Transforms into the Floating Pill */
+  nav.scrolled {
+    top: 1.2rem; 
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    
+    /* Pill Shape & Size */
+    width: min(1000px, calc(100% - 2rem));
+    padding: 0.6rem 1.6rem 0.6rem 2rem;
+    border-radius: 50px; 
+    
+    /* Appearance */
+    background: rgba(250, 247, 242, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
   .nav-logo {
     font-family: var(--serif);
     font-size: 1.15rem;
@@ -135,14 +143,17 @@
   }
 
  .nav-sub {
-  background: var(--black);
-  color: var(--cream) !important;
-  opacity: 1 !important;
-  padding: 0.5rem 1.2rem !important;
-  border-radius: 30px; /* Changed from 2px to 30px for the capsule look */
-  font-weight: 700;
-  transition: all 0.2s ease !important;
-}
+    background: var(--black);
+    color: var(--cream) !important;
+    padding: 0.45rem 1.2rem !important;
+    border-radius: 2px; /* Starts square */
+    transition: all 0.3s ease !important;
+  }
+
+  /* Turns into a capsule when the nav is a pill */
+  nav.scrolled .nav-sub {
+    border-radius: 30px;
+  }
 
   .nav-sub::after { display: none; }
   .nav-sub:hover { background: var(--orange) !important; transform: translateY(-1px); }
@@ -1303,6 +1314,16 @@
   });
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') shutModal();
+  });
+// Trigger the transformation from Bar to Pill
+  const navElement = document.querySelector('nav');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navElement.classList.add('scrolled');
+    } else {
+      navElement.classList.remove('scrolled');
+    }
   });
 </script>
 </body>
